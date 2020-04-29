@@ -1,6 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=Joti+One');
+@font-face {
+	font-family: 'Roboto';
+	src: url('./assets/fonts/Roboto-Regular.ttf') format('truetype');
+}
+
 html,
 body {
 	overflow: hidden;
 	height: 100%;
+}
+
+body {
+	button {
+		background: red;
+		&:hover {
+			color: yellow
+		}
+	}
 }

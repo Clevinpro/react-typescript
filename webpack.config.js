@@ -34,12 +34,11 @@ const cssLoaders = extra => {
 				hmr: isDev,
 				reloadAll: true
 			}
-		},
-		'css-loader'
+		}
 	];
 
 	if (extra) {
-		loaders.push(extra);
+		loaders.push(...extra);
 	}
 
 	return loaders;
@@ -131,15 +130,29 @@ module.exports = {
 		rules: [
 			{
 				test: /\.css$/,
-				use: cssLoaders()
+				use: cssLoaders(['css-loader', 'postcss-loader'])
 			},
 			{
-				test: /\.less$/,
-				use: cssLoaders('less-loader')
-			},
-			{
-				test: /\.s[ac]ss$/,
-				use: cssLoaders('sass-loader')
+				test: /\.module\.s(a|c)ss$/,
+				loader: [
+					{
+						loader: 'css-loader',
+						options: {
+							modules: {
+								localIdentName: '[local]--[hash:base64:5]'
+							},
+							importLoaders: 2,
+							sourceMap: isDev
+						}
+					},
+					'postcss-loader',
+					{
+						loader: 'sass-loader',
+						options: {
+							sourceMap: isDev
+						}
+					}
+				]
 			},
 			{
 				test: /\.(png|jpg|svg|gif)$/,
